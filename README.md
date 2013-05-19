@@ -1,7 +1,7 @@
 canvas
 ======
 
-To try it for yourself:
+To try it for yourself type the following command into th Terminal:
 
 `$ cd <your working dir>`
 
