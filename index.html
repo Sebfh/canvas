@@ -15,27 +15,51 @@
 		<canvas id="myCanvas" width="500" height="500"></canvas>
 	</body>
 	<script type="text/javascript">
-			
+			function randomRange (m,n) {
+			  return ( Math.floor ( Math.random ( )*0.9999999999999999* (n - m + 1) + m) );
+			}
 
 			var drw = {
 				canvas: '',
 				context: '',
 				timer: '',
 				x: 250,
+				y: 250,
+				refresh: 50,
+				blobs: [],
+
 
 				loop: function() {
-					drw.timer = setInterval(drw.draw,30);
+					drw.timer = setInterval(drw.draw,drw.refresh);
 				},
 				
 				draw: function() {
+					var blob = {
+						x: drw.x,
+						y: drw.y,
+						xSpeed: randomRange(-10, 10),
+						ySpeed: randomRange(-10, 10),
+						size: 10
+					}
+
+					drw.blobs.push(blob);
+
 					drw.context.clearRect(0,0,500,500);
 
-					drw.context.fillStyle="white";
-					drw.context.fillRect(drw.x,250,20,20);
+					for (var i = drw.blobs.length - 1; i >= 0; i--) {
+						blob = drw.blobs[i];
 
-					drw.x = drw.x + 1;
+						drw.context.fillStyle="white";
+						drw.context.fillRect(blob.x,blob.y,blob.size,blob.size);
 
-					console.log('draw');
+						blob.x = blob.x + blob.xSpeed;
+						blob.y = blob.y + blob.ySpeed;
+						blob.size = blob.size * 0.95;
+					};
+
+					//console.log(blob);
+					
+
 				},
 				init: function() {
 					drw.canvas = document.getElementById('myCanvas');
